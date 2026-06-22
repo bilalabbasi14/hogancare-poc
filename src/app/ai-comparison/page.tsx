@@ -1,428 +1,534 @@
-'use client';
-import { motion } from 'framer-motion';
-import { CheckCircle2, XCircle, Zap, Shield, FileSearch, Lightbulb, ArrowRight } from 'lucide-react';
+"use client";
+import { useState } from "react";
+
+const C = {
+  primary: "#00B4D8",
+  dark: "#0077B6",
+  text: "#0F172A",
+  muted: "#475569",
+  subtle: "#64748b",
+  bg: "rgba(255, 255, 255, 0.72)",
+  surface: "rgba(255, 255, 255, 0.45)",
+  border: "rgba(0, 119, 182, 0.08)",
+  green: "#0a7a3e",
+  greenBg: "#edf7f2",
+  amber: "#7a5c0a",
+  amberBg: "#fdf8ed",
+  red: "#b91c1c",
+  redBg: "#fff1f1",
+};
 
 const providers = [
   {
-    name: 'OpenAI',
-    model: 'GPT-4o',
-    color: '#10a37f',
-    lightBg: 'rgba(16, 163, 127, 0.05)',
-    borderColor: 'rgba(16, 163, 127, 0.15)',
-    tagline: 'Most mature ecosystem',
-    pricing: {
-      input: '$2.50',
-      output: '$10.00',
-      unit: 'per 1M tokens',
-      vision: '$2.50 + image fee',
-      monthly_est: '~$45–120',
-    },
-    context: '128K tokens',
-    vision: true,
-    documentHandling: 'Excellent',
-    documentScore: 95,
-    agedCareScore: 88,
-    speed: 'Fast',
-    speedScore: 82,
-    compliance: 'SOC 2, HIPAA-ready BAA',
-    strengths: ['Best-in-class document extraction', 'Largest third-party integrations', 'Assistants API for automation workflows', 'Fine-tuning available'],
-    weaknesses: ['Most expensive at scale', 'Rate limits on free tier', 'No Australia-specific data residency'],
-    useCases: ['Debtor PDF parsing', 'Contract analysis', 'Patient record summarisation', 'Automated email drafting'],
-    verdict: 'Best Choice',
-    verdictColor: '#065f46',
-    verdictBg: 'rgba(34, 197, 94, 0.08)',
-    verdictBorder: 'rgba(34, 197, 94, 0.15)',
+    name: "OpenAI",
+    model: "GPT-5.5 / GPT-4o",
+    tagline: "Most widely adopted, broadest ecosystem",
+    accent: "#0ea5e9",
+    accentBg: "#f0f9ff",
+    specs: [
+      { label: "Flagship price per 1M", value: "$5.00 / $30.00", note: "GPT-5.5 in/out" },
+      { label: "Best-value model", value: "$2.50 / $10.00", note: "GPT-4o" },
+      { label: "Budget model", value: "$0.15 / $0.60", note: "GPT-4o Mini" },
+      { label: "Context window", value: "~1M tokens", note: "GPT-5.5 and GPT-4.1" },
+    ],
+    strengths: [
+      "Most mature developer ecosystem",
+      "80% SWE-Bench score on real code tasks",
+      "Strongest for technical accuracy in documentation",
+      "Largest plugin and integration library",
+    ],
+    watch: "GPT-4o retiring in AU region June 2026. GPT-5.x availability in Australian regional endpoints unclear.",
   },
   {
-    name: 'Claude',
-    model: 'Claude 3.5 Sonnet',
-    color: '#d97706',
-    lightBg: 'rgba(217, 119, 6, 0.05)',
-    borderColor: 'rgba(217, 119, 6, 0.15)',
-    tagline: 'Safest for sensitive data',
-    pricing: {
-      input: '$3.00',
-      output: '$15.00',
-      unit: 'per 1M tokens',
-      vision: '$3.00 + image fee',
-      monthly_est: '~$55–140',
-    },
-    context: '200K tokens',
-    vision: true,
-    documentHandling: 'Excellent',
-    documentScore: 93,
-    agedCareScore: 95,
-    speed: 'Medium',
-    speedScore: 74,
-    compliance: 'SOC 2, Constitutional AI, Privacy-first',
-    strengths: ['Longest context window (200K)', 'Best for nuanced/sensitive content', 'Strong instruction-following', 'Ideal for NDIS compliance docs'],
-    weaknesses: ['Slightly pricier per token', 'Fewer third-party integrations', 'Slower than GPT-4o on large batches'],
-    useCases: ['NDIS documentation review', 'Care plan summarisation', 'Sensitive patient communications', 'Contract risk analysis'],
-    verdict: 'Best for Compliance',
-    verdictColor: '#92400e',
-    verdictBg: 'rgba(245, 158, 11, 0.08)',
-    verdictBorder: 'rgba(245, 158, 11, 0.15)',
+    name: "Claude",
+    model: "Sonnet 4.6 / Haiku 4.5",
+    tagline: "Highest consistency and instruction-following",
+    accent: "#00B4D8",
+    accentBg: "#f0fcff",
+    specs: [
+      { label: "Flagship price per 1M", value: "$3.00 / $15.00", note: "Sonnet 4.6 in/out" },
+      { label: "Premium model", value: "$5.00 / $25.00", note: "Opus 4.8" },
+      { label: "Budget model", value: "$1.00 / $5.00", note: "Haiku 4.5" },
+      { label: "Context window", value: "1M tokens", note: "Claude Opus 4.6" },
+    ],
+    strengths: [
+      "Highest rated for factual accuracy across comparisons",
+      "Less than 5% accuracy degradation at full context range",
+      "Best for constraint-heavy structured reasoning",
+      "53% adoption rate among coding professionals",
+    ],
+    watch: null,
   },
   {
-    name: 'Gemini',
-    model: 'Gemini 1.5 Pro',
-    color: '#4285f4',
-    lightBg: 'rgba(66, 133, 244, 0.05)',
-    borderColor: 'rgba(66, 133, 244, 0.15)',
-    tagline: 'Best value at scale',
-    pricing: {
-      input: '$1.25',
-      output: '$5.00',
-      unit: 'per 1M tokens',
-      vision: '$1.25 (multimodal)',
-      monthly_est: '~$20–65',
-    },
-    context: '1M tokens',
-    vision: true,
-    documentHandling: 'Good',
-    documentScore: 81,
-    agedCareScore: 76,
-    speed: 'Very Fast',
-    speedScore: 92,
-    compliance: 'SOC 2, Google Cloud HIPAA',
-    strengths: ['Largest context (1M tokens = entire folders)', 'Most affordable per token', 'Native Google Workspace integration', 'Fast inference speed'],
-    weaknesses: ['Less accurate on structured extraction', 'Fewer healthcare-specific fine-tunes', 'Still maturing for enterprise workflows'],
-    useCases: ['Bulk document ingestion', 'Google Sheets/Drive integration', 'High-volume low-cost processing', 'Meeting transcript analysis'],
-    verdict: 'Best Value',
-    verdictColor: '#1e40af',
-    verdictBg: 'rgba(66, 133, 244, 0.08)',
-    verdictBorder: 'rgba(66, 133, 244, 0.15)',
+    name: "Gemini",
+    model: "3.1 Pro / 3.5 Flash",
+    tagline: "Fastest responses, best price-to-performance",
+    accent: "#7c3aed",
+    accentBg: "#f5f3ff",
+    specs: [
+      { label: "Flagship price per 1M", value: "$2.00 / $12.00", note: "Gemini 3.1 Pro in/out" },
+      { label: "Mid-tier", value: "$1.50 / $9.00", note: "Gemini 3.5 Flash" },
+      { label: "Budget model", value: "$0.10 / $0.40", note: "Gemini 2.5 Flash-Lite" },
+      { label: "Context window", value: "1M tokens", note: "Gemini 2.5 Flash-Lite/3.1 Pro" },
+    ],
+    strengths: [
+      "Noticeably faster response times than OpenAI and Claude",
+      "Cheapest input tokens of all three providers",
+      "Best for Google ecosystem (Firebase, Android, Workspace)",
+      "77.1% on ARC-AGI-2 reasoning benchmark",
+    ],
+    watch: "Slightly less consistent on complex reasoning. Newer models not yet available in Australian regional endpoints.",
   },
 ];
 
-const criteria = [
-  { key: 'documentScore', label: 'Document Parsing Accuracy', icon: FileSearch },
-  { key: 'agedCareScore', label: 'Aged Care Fit', icon: Shield },
-  { key: 'speedScore', label: 'Response Speed', icon: Zap },
+const rosterRows = [
+  { model: "Gemini Flash-Lite", monthly: "$3.20", withDiscount: "$1.60", perWorkerDay: "$0.00004" },
+  { model: "GPT-4o Mini", monthly: "$1.80", withDiscount: "$0.90", perWorkerDay: "$0.00002" },
+  { model: "Claude Haiku 4.5", monthly: "$2.40", withDiscount: "$1.20", perWorkerDay: "$0.00003" },
+  { model: "Gemini 3.5 Flash", monthly: "$6.40", withDiscount: "$3.20", perWorkerDay: "$0.00007" },
+  { model: "Claude Sonnet 4.6", monthly: "$9.60", withDiscount: "$4.80", perWorkerDay: "$0.00011" },
+  { model: "GPT-4o", monthly: "$19.00", withDiscount: "$9.50", perWorkerDay: "$0.00021" },
 ];
 
-function ScoreBar({ score, color }: { score: number; color: string }) {
+const residencyData = [
+  {
+    provider: "Claude via AWS Bedrock",
+    datacenter: "AWS Sydney (ap-southeast-2)",
+    inferenceAU: "full",
+    latestModels: "full",
+    latestNote: "Sonnet 4.5 + Haiku 4.5 confirmed AU",
+    compliance: "IRAP assessment underway. CloudTrail audit logs in Sydney region.",
+  },
+  {
+    provider: "Gemini via Vertex AI",
+    datacenter: "Google Melbourne (australia-southeast1)",
+    inferenceAU: "partial",
+    latestModels: "partial",
+    latestNote: "Gemini 3.5 only in US/EU endpoints currently",
+    compliance: "Google Assured Workloads available. Older Gemini generations only in AU region.",
+  },
+  {
+    provider: "OpenAI via Azure",
+    datacenter: "Azure Sydney + Melbourne",
+    inferenceAU: "partial",
+    latestModels: "none",
+    latestNote: "GPT-4o retiring June 2026, no confirmed successor",
+    compliance: "Azure Assured Workloads available. At-rest residency expanded to AU, inference path less clear.",
+  },
+];
+
+function StatusDot({ level }: { level: "full" | "partial" | "none" }) {
+  const map = {
+    full: { bg: C.greenBg, color: C.green, label: "Yes" },
+    partial: { bg: C.amberBg, color: C.amber, label: "Partial" },
+    none: { bg: C.redBg, color: C.red, label: "No" },
+  };
+  const s = map[level];
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-      <div className="score-bar-track" style={{ flex: 1 }}>
-        <motion.div
-          className="score-bar-fill"
-          style={{ background: color }}
-          initial={{ width: 0 }}
-          whileInView={{ width: `${score}%` }}
-          viewport={{ once: true }}
-          transition={{ duration: 1, ease: [0.4, 0, 0.2, 1], delay: 0.2 }}
-        />
-      </div>
-      <span style={{ fontSize: 13, fontWeight: 700, color: '#334155', minWidth: 34 }}>{score}%</span>
-    </div>
+    <span style={{ background: s.bg, color: s.color, fontSize: "12px", fontWeight: 600, padding: "3px 10px", borderRadius: "20px", display: "inline-block" }}>
+      {s.label}
+    </span>
   );
 }
 
-const fadeUp = {
-  initial: { opacity: 0, y: 24 },
-  animate: { opacity: 1, y: 0 },
-};
+export default function AIProviderComparison() {
+  const [activeTab, setActiveTab] = useState<"tokens" | "cost">("cost");
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-const stagger = {
-  animate: { transition: { staggerChildren: 0.12 } },
-};
-
-export default function AIComparison() {
   return (
-    <div style={{ maxWidth: 1200, margin: '0 auto', padding: '56px 24px 80px' }}>
+    <div className="container-padding" style={{ fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif", color: C.text, maxWidth: "920px", margin: "0 auto", padding: "52px 28px 80px" }}>
+      <style>{`
+        @media (max-width: 640px) {
+          .container-padding {
+            padding: 32px 16px 60px !important;
+          }
+          .header-title {
+            font-size: 24px !important;
+            line-height: 1.3 !important;
+          }
+          .mobile-stack {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+          }
+          .mobile-grid-1fr {
+            grid-template-columns: 1fr !important;
+          }
+          .mobile-card-padding {
+            padding: 16px !important;
+          }
+          .mobile-card-padding-sm {
+            padding: 12px 16px !important;
+          }
+          .mobile-estimate-row {
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: 8px !important;
+          }
+          .mobile-table-header {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 12px !important;
+          }
+          .pricing-note-bubble {
+            padding: 16px 20px !important;
+            border-radius: 20px !important;
+          }
+          th, td {
+            padding: 8px 10px !important;
+            font-size: 12px !important;
+          }
+        }
+      `}</style>
+
       {/* Header */}
-      <motion.div
-        style={{ marginBottom: 56 }}
-        initial="initial"
-        animate="animate"
-        variants={stagger}
-      >
-        <motion.div className="section-label" style={{ marginBottom: 12 }} variants={fadeUp} transition={{ duration: 0.5 }}>
-          Module 1 of 3
-        </motion.div>
-        <motion.h1
-          style={{ fontSize: 'clamp(1.8rem, 4vw, 2.8rem)', fontWeight: 800, color: '#0F172A', marginBottom: 16 }}
-          variants={fadeUp}
-          transition={{ duration: 0.5, delay: 0.1 }}
+      <div style={{ marginBottom: "56px", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center" }}>
+        <h1
+          style={{ fontSize: "32px", fontWeight: 800, margin: "0 0 12px", lineHeight: 1.2, textAlign: "center" }}
+          className="text-gradient header-title"
         >
-          AI Provider Comparison
-        </motion.h1>
-        <motion.p
-          style={{ fontSize: 16, color: '#64748b', maxWidth: 600, lineHeight: 1.7 }}
-          variants={fadeUp}
-          transition={{ duration: 0.5, delay: 0.2 }}
-        >
-          A precise breakdown of OpenAI, Claude, and Gemini — evaluated specifically for aged care document processing, NDIS compliance, and operational automation.
-        </motion.p>
-      </motion.div>
+          Choosing the Right AI for Your Hospital
+        </h1>
+        <p style={{ fontSize: "15px", color: C.muted, margin: "0 auto", lineHeight: 1.75, maxWidth: "600px", textAlign: "center" }}>
+          A practical comparison of OpenAI, Claude, and Gemini, covering general capabilities, what rostering actually costs, Australian data residency, and a direct recommendation.
+        </p>
+        <div style={{ display: "flex", gap: "8px", marginTop: "20px", flexWrap: "wrap", justifyContent: "center" }}>
+          {["General overview", "Rostering costs", "Data residency", "Recommendation"].map((label, i) => {
+            const isHovered = hoveredIndex === i;
+            const defaultColor = "#00B4D8";
+            const hoverColor = "#0077B6";
+            return (
+              <a
+                key={i}
+                href={`#section-${i + 1}`}
+                onMouseEnter={() => setHoveredIndex(i)}
+                onMouseLeave={() => setHoveredIndex(null)}
+                style={{
+                  fontSize: "12px",
+                  color: "#fff",
+                  textDecoration: "none",
+                  padding: "6px 14px",
+                  border: `1.5px solid ${isHovered ? hoverColor : defaultColor}`,
+                  borderRadius: "20px",
+                  background: isHovered ? hoverColor : defaultColor,
+                  boxShadow: isHovered ? "0 4px 12px rgba(0, 180, 216, 0.24)" : "0 2px 4px rgba(0, 180, 216, 0.12)",
+                  transform: isHovered ? "translateY(-2px)" : "translateY(0)",
+                  transition: "all 0.2s cubic-bezier(0.4, 0, 0.2, 1)",
+                  display: "inline-block",
+                  cursor: "pointer",
+                  fontWeight: 600,
+                }}
+              >
+                {label}
+              </a>
+            );
+          })}
+        </div>
+      </div>
 
-      {/* Provider Cards */}
-      <motion.div
-        style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24, marginBottom: 56 }}
-        initial="initial"
-        whileInView="animate"
-        viewport={{ once: true }}
-        variants={stagger}
-      >
-        {providers.map((p) => (
-          <motion.div key={p.name} variants={fadeUp} transition={{ duration: 0.5 }}>
-            <div className="card card-hover" style={{
-              padding: 28,
-              borderTop: `3px solid ${p.color}`,
-              height: '100%',
-            }}>
-              {/* Header */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 }}>
-                <div>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 4 }}>
-                    <div style={{
-                      width: 10, height: 10, borderRadius: '50%',
-                      background: p.color,
-                      boxShadow: `0 0 8px ${p.color}40`,
-                    }} />
-                    <h2 style={{ fontSize: 22, fontWeight: 800, color: '#0F172A' }}>{p.name}</h2>
-                  </div>
-                  <div style={{ fontSize: 12, color: p.color, fontWeight: 600 }}>{p.model}</div>
-                  <div style={{ fontSize: 12, color: '#94a3b8', marginTop: 2 }}>{p.tagline}</div>
-                </div>
-                <span style={{
-                  padding: '5px 12px',
-                  borderRadius: 20,
-                  fontSize: 11,
-                  fontWeight: 700,
-                  background: p.verdictBg,
-                  color: p.verdictColor,
-                  border: `1px solid ${p.verdictBorder}`,
-                  whiteSpace: 'nowrap',
-                }}>{p.verdict}</span>
-              </div>
+      {/* Section 1 — Cards */}
+      <section id="section-1" style={{ marginBottom: "64px" }}>
+        <SectionLabel number="01" title="General overview" />
+        <p style={prose}>How the three providers compare on price, output quality, reliability, and context window.</p>
 
-              {/* Pricing */}
-              <div style={{ background: p.lightBg, border: `1px solid ${p.borderColor}`, borderRadius: 12, padding: '14px 16px', marginBottom: 20 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: p.color, letterSpacing: '0.08em', marginBottom: 10 }}>PRICING</div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                  <div>
-                    <div style={{ fontSize: 11, color: '#64748b' }}>Input</div>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: '#0F172A' }}>{p.pricing.input}</div>
-                    <div style={{ fontSize: 10, color: '#94a3b8' }}>{p.pricing.unit}</div>
-                  </div>
-                  <div>
-                    <div style={{ fontSize: 11, color: '#64748b' }}>Output</div>
-                    <div style={{ fontSize: 16, fontWeight: 800, color: '#0F172A' }}>{p.pricing.output}</div>
-                    <div style={{ fontSize: 10, color: '#94a3b8' }}>{p.pricing.unit}</div>
-                  </div>
-                </div>
-                <div style={{ marginTop: 10, paddingTop: 10, borderTop: `1px solid ${p.borderColor}` }}>
-                  <div style={{ fontSize: 11, color: '#64748b' }}>Est. Monthly (Hogan Care scale)</div>
-                  <div style={{ fontSize: 15, fontWeight: 700, color: p.color }}>{p.pricing.monthly_est}</div>
-                </div>
-              </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "16px", marginTop: "24px" }}>
+          {providers.map((p) => {
+            const outlineColor = p.name === "Claude"
+              ? "#f97316"
+              : p.name === "OpenAI"
+                ? "#1a1a1a"
+                : "#023E8A";
 
-              {/* Scores */}
-              <div style={{ marginBottom: 20 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: '#94a3b8', letterSpacing: '0.08em', marginBottom: 12 }}>PERFORMANCE SCORES</div>
-                {criteria.map((c) => {
-                  const Icon = c.icon;
-                  return (
-                    <div key={c.key} style={{ marginBottom: 10 }}>
-                      <div style={{ fontSize: 12, color: '#475569', marginBottom: 5, display: 'flex', alignItems: 'center', gap: 6 }}>
-                        <Icon size={13} strokeWidth={2} />
-                        {c.label}
+            return (
+              <div key={p.name} style={{
+                border: `2px solid ${outlineColor}`,
+                borderRadius: "10px",
+                background: C.bg,
+                backdropFilter: "blur(20px)",
+                WebkitBackdropFilter: "blur(20px)",
+                overflow: "hidden",
+                position: "relative",
+              }}>
+                <div style={{ padding: "20px" }}>
+                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", marginBottom: "14px" }}>
+                    <div>
+                      <div style={{ fontSize: "18px", fontWeight: 700, color: outlineColor }}>{p.name}</div>
+                      <div style={{ fontSize: "12px", color: C.muted, marginTop: "2px" }}>{p.model}</div>
+                    </div>
+                    <div style={{ background: p.accentBg, color: p.accent, fontSize: "11px", fontWeight: 600, padding: "4px 10px", borderRadius: "6px", whiteSpace: "nowrap" }}>
+                      {p.name === "Claude" ? "Anthropic" : p.name === "Gemini" ? "Google" : "OpenAI"}
+                    </div>
+                  </div>
+
+                  <p style={{ fontSize: "13px", color: C.muted, margin: "0 0 16px", lineHeight: 1.5, fontStyle: "italic" }}>{p.tagline}</p>
+
+                  <div style={{ borderTop: `1px solid ${outlineColor}`, paddingTop: "14px", marginBottom: "14px" }}>
+                    {p.specs.map((s, i) => (
+                      <div key={i} style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", padding: "6px 0", borderBottom: i < p.specs.length - 1 ? `1px solid #f0f0f0` : "none" }}>
+                        <span style={{ fontSize: "12px", color: C.muted }}>{s.label}</span>
+                        <div style={{ textAlign: "right" }}>
+                          <div style={{ fontSize: "13px", fontWeight: 600, color: C.text }}>{s.value}</div>
+                          <div style={{ fontSize: "11px", color: C.subtle }}>{s.note}</div>
+                        </div>
                       </div>
-                      <ScoreBar score={(p as any)[c.key]} color={p.color} />
+                    ))}
+                  </div>
+
+                  {p.watch && (
+                    <div style={{ background: C.amberBg, border: `1px solid #f0d98a`, borderRadius: "6px", padding: "10px 12px", marginTop: "14px" }}>
+                      <div style={{ fontSize: "11px", fontWeight: 700, color: C.amber, marginBottom: "4px" }}>Note</div>
+                      <p style={{ fontSize: "12px", color: "#5a4308", margin: 0, lineHeight: 1.5 }}>{p.watch}</p>
                     </div>
-                  );
-                })}
+                  )}
+                </div>
               </div>
+            );
+          })}
+        </div>
 
-              {/* Key specs */}
-              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginBottom: 20 }}>
-                <span className="badge badge-blue">Context: {p.context}</span>
-                <span className="badge badge-cyan">Speed: {p.speed}</span>
-                {p.vision && <span className="badge badge-green">Vision</span>}
+        <div className="pricing-note-bubble" style={{
+          background: C.bg,
+          border: "2px solid #1a1a1a",
+          borderRadius: "40px 40px 30px 30px",
+          padding: "20px 28px",
+          marginTop: "24px",
+          position: "relative",
+          boxShadow: "4px 4px 0px rgba(0,0,0,0.05)",
+        }}>
+          <span style={{ fontSize: "13px", color: C.text, lineHeight: 1.7 }}>
+            <strong style={{ color: C.text }}>On pricing:</strong> All three offer 50% discounts via Batch API for non-real-time processing, and prompt caching reduces costs by a further 50-80% on repeated system prompts. Consumer subscriptions are $20/month across all three.
+          </span>
+        </div>
+      </section>
+
+      {/* Section 2 — Rostering */}
+      <section id="section-2" style={{ marginBottom: "64px" }}>
+        <SectionLabel number="02" title="Rostering at scale" />
+        <p style={prose}>What AI-assisted shift scheduling actually costs for a 150-employee hospital with daily updates and batch processing.</p>
+
+        {/* Token breakdown visual */}
+        <div className="mobile-card-padding" style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "10px", padding: "24px", marginBottom: "24px" }}>
+          <div style={{ fontSize: "13px", fontWeight: 700, color: C.dark, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "16px" }}>Monthly token budget — 150 employees</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "12px", marginBottom: "16px" }}>
+            {[
+              { label: "Full roster generation", detail: "7 departments x 28 days", tokens: "100K tokens", freq: "1x per month" },
+              { label: "Daily delta updates", detail: "Swaps, sick calls, changes", tokens: "6,500 tokens/day", freq: "30x per month" },
+              { label: "Ad-hoc coverage checks", detail: "Conflict queries, on-demand", tokens: "3,000 per query", freq: "~60x per month" },
+            ].map((item, i) => (
+              <div key={i} style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: "8px", padding: "14px" }}>
+                <div style={{ fontSize: "12px", fontWeight: 600, color: C.text, marginBottom: "4px" }}>{item.label}</div>
+                <div style={{ fontSize: "11px", color: C.subtle, marginBottom: "10px" }}>{item.detail}</div>
+                <div style={{ fontSize: "16px", fontWeight: 700, color: C.primary }}>{item.tokens}</div>
+                <div style={{ fontSize: "11px", color: C.subtle, marginTop: "2px" }}>{item.freq}</div>
               </div>
+            ))}
+          </div>
+          <div className="mobile-estimate-row" style={{ background: C.surface, border: "1.5px solid #2a2323ff", borderRadius: "6px", padding: "12px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: "13px", color: C.muted }}>Total monthly estimate</span>
+            <span style={{ fontSize: "18px", fontWeight: 700, color: C.dark }}>~500,000 tokens / month</span>
+          </div>
+        </div>
 
-              {/* Strengths */}
-              <div style={{ marginBottom: 16 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: '#16a34a', letterSpacing: '0.08em', marginBottom: 8 }}>STRENGTHS</div>
-                {p.strengths.map((s, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 5 }}>
-                    <CheckCircle2 size={14} color="#16a34a" style={{ marginTop: 2, flexShrink: 0 }} />
-                    <span style={{ fontSize: 13, color: '#374151' }}>{s}</span>
-                  </div>
+        {/* Cost table with toggle */}
+        <div style={{ border: `1px solid ${C.border}`, borderRadius: "10px", overflow: "hidden" }}>
+          <div className="mobile-table-header" style={{ background: C.surface, padding: "16px 20px", borderBottom: `1px solid ${C.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: "13px", fontWeight: 600, color: C.text }}>Monthly cost comparison — 500K tokens</span>
+            <div style={{ display: "flex", gap: "0", border: `1px solid ${C.border}`, borderRadius: "6px", overflow: "hidden" }}>
+              {(["cost", "tokens"] as const).map((tab) => (
+                <button key={tab} onClick={() => setActiveTab(tab)} style={{
+                  padding: "5px 14px", fontSize: "12px", border: "none", cursor: "pointer",
+                  background: activeTab === tab ? C.primary : "transparent",
+                  color: activeTab === tab ? "#fff" : C.muted, fontWeight: activeTab === tab ? 600 : 400,
+                  flex: 1,
+                }}>
+                  {tab === "cost" ? "With discounts" : "Standard pricing"}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div style={{ overflowX: "auto" }}>
+            <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+              <thead>
+                <tr style={{ background: "#fafafa" }}>
+                  <th style={th}>Model</th>
+                  <th style={th}>{activeTab === "cost" ? "Monthly (batch + caching)" : "Monthly (standard)"}</th>
+                  <th style={th}>Per worker / per day</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rosterRows.map((row, i) => (
+                  <tr key={i} style={{ background: i % 2 === 0 ? C.bg : "#fafafa", borderBottom: `1px solid #f0f0f0` }}>
+                    <td style={td}>{row.model}</td>
+                    <td style={{ ...td, fontWeight: 600, color: C.dark }}>{activeTab === "cost" ? row.withDiscount : row.monthly}</td>
+                    <td style={{ ...td, color: C.subtle }}>{row.perWorkerDay}</td>
+                  </tr>
                 ))}
-              </div>
+              </tbody>
+            </table>
+          </div>
+          <div style={{ padding: "12px 20px", borderTop: `1px solid ${C.border}`, background: C.surface }}>
+            <p style={{ fontSize: "12px", color: C.subtle, margin: 0 }}>
+              Batch API (50% off): available on OpenAI and Anthropic for non-real-time workloads. Prompt caching reduces cost of repeated system prompts by 50-80%. Per-worker cost assumes 150 employees, 30 days.
+            </p>
+          </div>
+        </div>
 
-              {/* Weaknesses */}
-              <div style={{ marginBottom: 16 }}>
-                <div style={{ fontSize: 11, fontWeight: 700, color: '#dc2626', letterSpacing: '0.08em', marginBottom: 8 }}>LIMITATIONS</div>
-                {p.weaknesses.map((w, i) => (
-                  <div key={i} style={{ display: 'flex', gap: 8, marginBottom: 5 }}>
-                    <XCircle size={14} color="#dc2626" style={{ marginTop: 2, flexShrink: 0 }} />
-                    <span style={{ fontSize: 13, color: '#374151' }}>{w}</span>
+        {/* Two tier approach */}
+        <div style={{ marginTop: "24px" }}>
+          <div style={{ fontSize: "13px", fontWeight: 700, color: C.text, marginBottom: "14px" }}>Recommended approach: two-tier routing</div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "14px" }}>
+            <div style={{ border: `1px solid ${C.border}`, borderRadius: "8px", padding: "18px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+                <div style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "6px", padding: "4px 10px", fontSize: "11px", fontWeight: 700, color: C.dark }}>Tier 1 — 80% of workload</div>
+              </div>
+              <div style={{ fontSize: "14px", fontWeight: 600, marginBottom: "4px" }}>Gemini 3.5 Flash or Claude Haiku 4.5</div>
+              <p style={{ fontSize: "13px", color: C.muted, margin: "0 0 10px", lineHeight: 1.6 }}>Overnight batch generation. Standard shift filling, 28-day scheduling, availability matching.</p>
+              <div style={{ fontSize: "12px", color: C.subtle }}>Runs automatically, no human review needed</div>
+            </div>
+            <div style={{ border: `2px solid ${C.primary}`, borderRadius: "8px", padding: "18px" }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "10px" }}>
+                <div style={{ background: C.surface, border: "1.5px solid #1a1a1a", borderRadius: "6px", padding: "4px 10px", fontSize: "11px", fontWeight: 700, color: C.dark }}>Tier 2 — 20% of workload</div>
+              </div>
+              <div style={{ fontSize: "14px", fontWeight: 600, marginBottom: "4px" }}>Claude Sonnet 4.6</div>
+              <p style={{ fontSize: "13px", color: C.muted, margin: "0 0 10px", lineHeight: 1.6 }}>Triggered on detected conflicts: leave overlaps, ICU coverage gaps, compliance violations, emergency rescheduling.</p>
+              <div style={{ fontSize: "12px", color: C.subtle }}>A wrong roster has direct patient impact — quality matters here</div>
+            </div>
+          </div>
+          <div className="mobile-estimate-row" style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "6px", padding: "12px 16px", marginTop: "14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <span style={{ fontSize: "13px", color: C.muted }}>Combined monthly cost (80/20 split, 150 employees)</span>
+            <span style={{ fontSize: "16px", fontWeight: 700, color: C.dark }}>~$4 / month</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Section 3 — Data Residency */}
+      <section id="section-3" style={{ marginBottom: "64px" }}>
+        <SectionLabel number="03" title="Australian data residency" />
+        <p style={prose}>This is the most consequential part of the decision. Under the Privacy Act 1988 and Australian Privacy Principles, the question is not just where data is stored at rest — it is where inference happens, where your prompt is read and a response is generated.</p>
+
+
+
+        {/* Residency comparison */}
+        <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "24px" }}>
+          {residencyData.map((r, i) => (
+            <div key={i} style={{
+              border: i === 0 ? `2px solid ${C.primary}` : `1px solid ${C.border}`,
+              borderRadius: "10px", padding: "18px 20px", background: i === 0 ? "#f7fcfe" : C.bg,
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "12px", marginBottom: "12px" }}>
+                <div>
+                  <div style={{ fontSize: "15px", fontWeight: 700, color: C.text }}>{r.provider}</div>
+                  <div style={{ fontSize: "12px", color: C.subtle, marginTop: "2px" }}>{r.datacenter}</div>
+                </div>
+                <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "11px", color: C.subtle, marginBottom: "4px" }}>Inference in AU</div>
+                    <StatusDot level={r.inferenceAU as "full" | "partial" | "none"} />
                   </div>
-                ))}
+                  <div style={{ textAlign: "center" }}>
+                    <div style={{ fontSize: "11px", color: C.subtle, marginBottom: "4px" }}>Latest models in AU</div>
+                    <StatusDot level={r.latestModels as "full" | "partial" | "none"} />
+                  </div>
+                </div>
               </div>
-
-              {/* Use cases */}
-              <div>
-                <div style={{ fontSize: 11, fontWeight: 700, color: '#94a3b8', letterSpacing: '0.08em', marginBottom: 8 }}>BEST FOR HOGAN CARE</div>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {p.useCases.map((u, i) => (
-                    <span key={i} style={{
-                      fontSize: 11, padding: '3px 9px',
-                      background: p.lightBg, color: p.color,
-                      border: `1px solid ${p.borderColor}`,
-                      borderRadius: 6, fontWeight: 500,
-                    }}>{u}</span>
-                  ))}
+              <div className="mobile-grid-1fr" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "13px" }}>
+                <div style={{ color: C.muted, lineHeight: 1.55 }}>
+                  <span style={{ fontWeight: 600, color: C.text }}>Models: </span>{r.latestNote}
+                </div>
+                <div style={{ color: C.muted, lineHeight: 1.55 }}>
+                  <span style={{ fontWeight: 600, color: C.text }}>Compliance: </span>{r.compliance}
                 </div>
               </div>
             </div>
-          </motion.div>
-        ))}
-      </motion.div>
-
-      {/* Full comparison table */}
-      <motion.div
-        className="card"
-        style={{ overflow: 'hidden', marginBottom: 48 }}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        <div style={{
-          padding: '24px 28px',
-          borderBottom: '1px solid rgba(0,0,0,0.04)',
-          background: 'rgba(0, 119, 182, 0.02)',
-        }}>
-          <h2 style={{ fontSize: 20, fontWeight: 700, color: '#0F172A' }}>Side-by-Side Comparison</h2>
-          <p style={{ fontSize: 13, color: '#64748b', marginTop: 4 }}>All metrics evaluated in the context of aged care and NDIS operations</p>
+          ))}
         </div>
-        <div style={{ overflowX: 'auto' }}>
-          <table className="table-modern">
-            <thead>
-              <tr>
-                <th>CRITERIA</th>
-                {providers.map(p => (
-                  <th key={p.name} style={{ textAlign: 'center', color: p.color }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6 }}>
-                      <div style={{ width: 8, height: 8, borderRadius: '50%', background: p.color }} />
-                      {p.name}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {[
-                { label: 'Best Model', vals: ['GPT-4o', 'Claude 3.5 Sonnet', 'Gemini 1.5 Pro'] },
-                { label: 'Input Price /1M tokens', vals: ['$2.50', '$3.00', '$1.25'], best: 2 },
-                { label: 'Output Price /1M tokens', vals: ['$10.00', '$15.00', '$5.00'], best: 2 },
-                { label: 'Est. Monthly Cost', vals: ['$45–120', '$55–140', '$20–65'], best: 2 },
-                { label: 'Context Window', vals: ['128K', '200K', '1M'], best: 2 },
-                { label: 'Vision / PDF Reading', vals: ['Yes', 'Yes', 'Yes'] },
-                { label: 'Document Accuracy', vals: ['95%', '93%', '81%'], best: 0 },
-                { label: 'Aged Care Fit Score', vals: ['88%', '95%', '76%'], best: 1 },
-                { label: 'Response Speed', vals: ['Fast', 'Medium', 'Very Fast'], best: 2 },
-                { label: 'HIPAA / Compliance', vals: ['BAA Available', 'Privacy-First', 'Google BAA'], best: 1 },
-                { label: 'NDIS Doc Handling', vals: ['Good', 'Best', 'Fair'], best: 1 },
-                { label: 'Australia Data Residency', vals: ['No', 'No', 'Yes'], best: 2 },
-                { label: 'Free Tier / Trial', vals: ['$5 credit', 'Paid only', 'Generous'], best: 2 },
-                { label: 'Xero / Zoho Integration', vals: ['Via API', 'Via API', 'Native Google'], best: 2 },
-                { label: 'Best Overall Verdict', vals: ['Recommended', 'Compliance-Critical', 'High-Volume/Budget'] },
-              ].map((row, i) => (
-                <tr key={i}>
-                  <td style={{ fontWeight: 600, color: '#374151' }}>{row.label}</td>
-                  {row.vals.map((v, j) => (
-                    <td key={j} style={{
-                      textAlign: 'center',
-                      fontWeight: row.best === j ? 700 : 400,
-                      color: row.best === j ? providers[j].color : '#475569',
-                    }}>
-                      {v}
-                      {row.best === j && (
-                        <span style={{
-                          marginLeft: 6,
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          width: 16, height: 16,
-                          borderRadius: '50%',
-                          background: `${providers[j].color}15`,
-                          fontSize: 10,
-                        }}>
-                          <CheckCircle2 size={10} color={providers[j].color} />
-                        </span>
-                      )}
-                    </td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </motion.div>
 
-      {/* Recommendation box */}
-      <motion.div
-        className="card"
-        style={{
-          padding: 36,
-          background: 'linear-gradient(135deg, #023E8A, #0077B6)',
-          color: 'white',
-          border: 'none',
-          overflow: 'hidden',
-          position: 'relative',
-        }}
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        {/* Subtle background decoration */}
-        <div style={{
-          position: 'absolute', top: -40, right: -40,
-          width: 200, height: 200, borderRadius: '50%',
-          background: 'rgba(255,255,255,0.04)',
-        }} />
-        <div style={{
-          position: 'absolute', bottom: -60, left: -30,
-          width: 160, height: 160, borderRadius: '50%',
-          background: 'rgba(255,255,255,0.03)',
-        }} />
-
-        <div style={{ display: 'flex', gap: 20, alignItems: 'flex-start', flexWrap: 'wrap', position: 'relative' }}>
-          <div style={{
-            width: 48, height: 48, borderRadius: 14,
-            background: 'rgba(255,255,255,0.12)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            flexShrink: 0,
-          }}>
-            <Lightbulb size={24} color="white" />
+        <div className="mobile-card-padding-sm" style={{ background: C.surface, border: "1.5px solid #1a1a1a", borderRadius: "8px", padding: "16px 20px" }}>
+          <div style={{ fontSize: "12px", fontWeight: 700, color: C.dark, marginBottom: "8px" }}>Configuration detail — Claude on AWS Bedrock</div>
+          <p style={{ fontSize: "13px", color: "#0a4a63", margin: "0 0 8px", lineHeight: 1.7 }}>
+            Two settings must both point to Australia for a deployment to pass an audit:
+          </p>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "10px" }}>
+            {[
+              { label: "Inference geo", desc: "Controls where the prompt is read and a response is generated. Must be set to ap-southeast-2 (Sydney)." },
+              { label: "Workspace geo", desc: "Controls where metadata about each call is stored. Must also be set to Australia. If only one is correct, the deployment fails audit." },
+            ].map((item, i) => (
+              <div key={i} style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: "6px", padding: "12px 14px" }}>
+                <div style={{ fontSize: "12px", fontWeight: 700, color: C.dark, marginBottom: "4px", fontFamily: "monospace" }}>{item.label}</div>
+                <div style={{ fontSize: "12px", color: C.muted, lineHeight: 1.55 }}>{item.desc}</div>
+              </div>
+            ))}
           </div>
-          <div style={{ flex: 1, minWidth: 280 }}>
-            <h3 style={{ fontSize: 20, fontWeight: 800, marginBottom: 12 }}>Our Recommendation for Hogan Care</h3>
-            <p style={{ fontSize: 15, lineHeight: 1.7, opacity: 0.92 }}>
-              Start with <strong>OpenAI GPT-4o</strong> for document processing and debtor management — it has the most accurate PDF parsing and the broadest ecosystem.
-              Use <strong>Claude</strong> for any NDIS compliance or sensitive patient documentation where accuracy and safety are paramount.
-              Consider <strong>Gemini</strong> when you scale to bulk processing — its pricing drops significantly at volume and its Google Workspace integration pairs naturally with Xero and Zoho exports.
-            </p>
-            <div style={{ display: 'flex', gap: 10, marginTop: 20, flexWrap: 'wrap' }}>
-              {['Phase 1: OpenAI', 'Phase 2: + Claude for compliance', 'Phase 3: Gemini at scale'].map((phase, i) => (
-                <span key={i} style={{
-                  background: 'rgba(255,255,255,0.12)',
-                  padding: '6px 14px', borderRadius: 8,
-                  fontSize: 13, fontWeight: 600,
-                  border: '1px solid rgba(255,255,255,0.1)',
-                }}>{phase}</span>
+        </div>
+      </section>
+
+      {/* Section 4 — Recommendation */}
+      <section id="section-4" style={{ marginBottom: "32px" }}>
+        <SectionLabel number="04" title="Recommendation" />
+        <p style={prose}>A direct answer based on the three factors above.</p>
+
+        <div style={{ border: `2px solid ${C.primary}`, borderRadius: "12px", overflow: "hidden" }}>
+          <div className="mobile-card-padding-sm" style={{ background: C.primary, padding: "16px 24px" }}>
+            <div style={{ color: "#fff", fontSize: "11px", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: "4px" }}>Overall recommendation</div>
+            <div style={{ color: "#fff", fontSize: "20px", fontWeight: 700 }}>Claude via Amazon Bedrock (Sydney region)</div>
+          </div>
+          <div className="mobile-card-padding" style={{ padding: "24px", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "16px" }}>
+            {[
+              { label: "Data residency", reason: "Full geo-lock in AWS Sydney. Both inference and metadata stay in Australia. Auditable via CloudTrail logs stored in ap-southeast-2." },
+              { label: "Rostering quality", reason: "Highest accuracy on constraint-heavy structured tasks. Reliable instruction-following matters when a wrong roster has patient impact." },
+              { label: "Cost", reason: "At 150 employees, all providers cost under $10/month with batch processing. Cost is not a differentiator — reliability and compliance are." },
+            ].map((item, i) => (
+              <div key={i} style={{ borderLeft: `3px solid ${C.primary}`, paddingLeft: "14px" }}>
+                <div style={{ fontSize: "12px", fontWeight: 700, color: C.dark, marginBottom: "6px" }}>{item.label}</div>
+                <p style={{ fontSize: "13px", color: C.muted, margin: 0, lineHeight: 1.65 }}>{item.reason}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="mobile-card-padding" style={{ borderTop: `1px solid ${C.border}`, padding: "20px 24px" }}>
+            <div style={{ fontSize: "12px", fontWeight: 700, color: C.dark, textTransform: "uppercase", letterSpacing: "0.08em", marginBottom: "14px" }}>Implementation summary</div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "10px" }}>
+              {[
+                { label: "Bulk overnight batch", model: "Claude Haiku 4.5", detail: "Standard shift generation, 28-day schedules, all departments. Runs automatically via Batch API at 50% cost." },
+                { label: "Complex conflict resolution", model: "Claude Sonnet 4.5", detail: "Triggered when conflicts are detected. Leave overlaps, ICU coverage gaps, compliance breaches." },
+                { label: "Infrastructure", model: "AWS Bedrock ap-southeast-2", detail: "Both inference geo and workspace geo set to Sydney. IRAP-aligned. Full CloudTrail audit trail in-region." },
+              ].map((item, i) => (
+                <div key={i} style={{ background: C.surface, border: `1px solid ${C.border}`, borderRadius: "8px", padding: "14px" }}>
+                  <div style={{ fontSize: "11px", color: C.subtle, marginBottom: "4px" }}>{item.label}</div>
+                  <div style={{ fontSize: "13px", fontWeight: 700, color: C.text, marginBottom: "6px" }}>{item.model}</div>
+                  <div style={{ fontSize: "12px", color: C.muted, lineHeight: 1.6 }}>{item.detail}</div>
+                </div>
               ))}
             </div>
           </div>
         </div>
-      </motion.div>
+      </section>
+
+      <div style={{ borderTop: `1px solid #e8e8e8`, paddingTop: "20px", fontSize: "11px", color: C.subtle }}>
+        Pricing data current as of June 2026. API rates are subject to change — verify with each provider before procurement.
+      </div>
     </div>
   );
 }
+
+function SectionLabel({ number, title }: { number: string; title: string }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "8px" }}>
+      <span style={{ fontSize: "11px", fontWeight: 700, color: "#00B4D8", fontFamily: "monospace", letterSpacing: "0.05em" }}>{number}</span>
+      <h2 style={{ fontSize: "20px", fontWeight: 700, margin: 0, color: "#1a1a1a" }}>{title}</h2>
+    </div>
+  );
+}
+
+const prose: React.CSSProperties = {
+  fontSize: "14px", lineHeight: 1.75, color: "#555", margin: "0 0 20px", maxWidth: "720px",
+};
+
+const th: React.CSSProperties = {
+  padding: "10px 16px", textAlign: "left", fontSize: "12px", fontWeight: 700,
+  color: "#0077B6", borderBottom: "1px solid #d0eaf5", background: "#f7fcfe",
+};
+
+const td: React.CSSProperties = {
+  padding: "10px 16px", fontSize: "13px", verticalAlign: "middle",
+};
