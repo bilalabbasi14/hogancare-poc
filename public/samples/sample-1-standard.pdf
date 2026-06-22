@@ -1,0 +1,57 @@
+%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [3 0 R] /Count 1 >>
+endobj
+3 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Contents 4 0 R /Resources << /Font << /F1 5 0 R >> >> >>
+endobj
+4 0 obj
+<< /Length 1328 >>
+stream
+BT
+/F1 9 Tf
+50 730 Td (HOGAN CARE - STANDARD DEBTOR REPORT) Tj
+50 716 Td (============================================================) Tj
+50 702 Td (Generated: 22/06/2026) Tj
+50 688 Td (Organisation: Hogan Care Pty Ltd) Tj
+50 674 Td () Tj
+50 660 Td (DEBTOR REPORT) Tj
+50 646 Td (============================================================) Tj
+50 632 Td () Tj
+50 618 Td (ID     | Client Name              | Amount Due | Due Date   | Status) Tj
+50 604 Td (-------|--------------------------|------------|------------|----------) Tj
+50 590 Td (D001 | Margaret Thompson | $2,450.00 | 01/06/2025 | OVERDUE) Tj
+50 576 Td (D002 | Robert Williams | $890.50 | 15/06/2025 | DUE SOON) Tj
+50 562 Td (D003 | Patricia Anderson | $0.00 | 01/05/2025 | CLEARED) Tj
+50 548 Td (D004 | James Morrison | $3,200.00 | 20/05/2025 | OVERDUE) Tj
+50 534 Td (D005 | Susan Clarke | $1,675.25 | 30/06/2025 | PENDING) Tj
+50 520 Td (D006 | David Harris | -$999.00 | 10/06/2025 | ERROR) Tj
+50 506 Td (D007 | Linda Watson | $4,100.00 | 05/05/2025 | OVERDUE) Tj
+50 492 Td () Tj
+50 478 Td (============================================================) Tj
+50 464 Td (Total Records: 7) Tj
+50 450 Td (Note: Amount -999 indicates data entry error. Amount 0 = cleared.) Tj
+50 436 Td (============================================================) Tj
+50 422 Td () Tj
+ET
+endstream
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000001621 00000 n 
+trailer
+<< /Size 6 /Root 1 0 R >>
+startxref
+1689
+%%EOF

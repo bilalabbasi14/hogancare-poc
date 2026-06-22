@@ -1,0 +1,87 @@
+[
+  {
+    "id": "P001",
+    "name": "Margaret Thompson",
+    "age": 82,
+    "condition": ["Dementia (moderate)", "Mobility limitations"],
+    "careLevel": "High",
+    "requiredCertifications": ["Dementia Care", "Manual Handling"],
+    "preferredWorkers": ["SW001", "SW003"],
+    "shiftPattern": {
+      "days": ["monday", "wednesday", "friday"],
+      "time": "08:00-12:00",
+      "durationHours": 4,
+      "type": "Morning Personal Care"
+    },
+    "fundingBudgetWeekly": 600,
+    "notes": "Responds well to familiar faces. Needs patience with medication routine."
+  },
+  {
+    "id": "P002",
+    "name": "Robert Williams",
+    "age": 75,
+    "condition": ["Post-stroke rehabilitation", "Wound care required"],
+    "careLevel": "High",
+    "requiredCertifications": ["Wound Care", "Manual Handling", "Medication Administration"],
+    "preferredWorkers": ["SW002", "SW005"],
+    "shiftPattern": {
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "time": "09:00-11:00",
+      "durationHours": 2,
+      "type": "Daily Medical Support"
+    },
+    "fundingBudgetWeekly": 700,
+    "notes": "Wound dressing change every morning. Medication at 9:30am sharp."
+  },
+  {
+    "id": "P003",
+    "name": "Dorothy Jenkins",
+    "age": 88,
+    "condition": ["Dementia (severe)", "Diabetes management"],
+    "careLevel": "Critical",
+    "requiredCertifications": ["Dementia Care", "Medication Administration", "Manual Handling"],
+    "preferredWorkers": ["SW001", "SW005"],
+    "shiftPattern": {
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
+      "time": "07:00-10:00",
+      "durationHours": 3,
+      "type": "Morning Care & Medication"
+    },
+    "fundingBudgetWeekly": 950,
+    "notes": "Blood glucose check mandatory before breakfast. Can become distressed with unfamiliar workers."
+  },
+  {
+    "id": "P004",
+    "name": "George Campbell",
+    "age": 71,
+    "condition": ["COPD", "Anxiety disorder"],
+    "careLevel": "Medium",
+    "requiredCertifications": ["Medication Administration", "First Aid"],
+    "preferredWorkers": ["SW003"],
+    "shiftPattern": {
+      "days": ["tuesday", "thursday", "saturday"],
+      "time": "10:00-12:00",
+      "durationHours": 2,
+      "type": "Social Support & Medication"
+    },
+    "fundingBudgetWeekly": 300,
+    "notes": "Prefers calm, quiet workers. Do not rush. Enjoys conversation."
+  },
+  {
+    "id": "P005",
+    "name": "Edna Collins",
+    "age": 79,
+    "condition": ["Hip replacement recovery", "Hypertension"],
+    "careLevel": "Medium",
+    "requiredCertifications": ["Manual Handling", "Medication Administration"],
+    "preferredWorkers": ["SW004"],
+    "shiftPattern": {
+      "days": ["monday", "wednesday", "friday", "sunday"],
+      "time": "16:00-19:00",
+      "durationHours": 3,
+      "type": "Afternoon Physio Support"
+    },
+    "fundingBudgetWeekly": 480,
+    "notes": "Physiotherapy exercises must be completed. Monitor blood pressure before exercise."
+  }
+]
