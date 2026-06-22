@@ -20,6 +20,8 @@ RULES YOU MUST FOLLOW:
 5. Workers with prior history with a participant MUST be strongly preferred — continuity of care is critical in aged care.
 6. If a participant has a preferred worker list, those workers get priority.
 7. If NO valid worker can be assigned to a shift, flag it as UNASSIGNED and explain why.
+8. ALWAYS use worker names (e.g., "Sarah", "David") instead of IDs (like "SW004") in your assignmentReason and alternativeWorker fields.
+9. Provide a detailed, 2-3 sentence explanation for the assignmentReason, outlining exactly why they were the best fit (history, skills, cost, etc).
 
 WEIGHTING PRIORITIES (0–100, higher = more important):
 
@@ -45,9 +47,9 @@ RESPOND ONLY IN VALID JSON. No explanation text outside the JSON. Format:
       "shiftType": "Morning Personal Care",
       "assignedWorkerId": "SW001",
       "assignedWorkerName": "...",
-      "assignmentReason": "SW001 has 48 prior shifts with Margaret (highest continuity). Holds required Dementia Care and Manual Handling certs. Available 07:00-15:00 Monday. Cost: $130.00.",
+      "assignmentReason": "Sarah has completed 48 prior shifts with Margaret, giving her the highest continuity score among available staff. She holds both the Dementia Care and Manual Handling certifications required for this shift, and her availability perfectly matches the 07:00-15:00 window. Additionally, assigning her keeps Margaret within her weekly funding budget.",
       "confidenceScore": 95,
-      "alternativeWorker": "SW003",
+      "alternativeWorker": "Linda",
       "weeklyWorkerCost": 130.00,
       "flags": []
     }
