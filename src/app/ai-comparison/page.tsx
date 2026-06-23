@@ -412,7 +412,7 @@ export default function AIProviderComparison() {
         <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginBottom: "24px" }}>
           {residencyData.map((r, i) => (
             <div key={i} style={{
-              border: i === 0 ? `2px solid ${C.primary}` : `1px solid ${C.border}`,
+              border: i === 0 ? `2px solid ${C.primary}` : `1.5px solid #1a1a1a`,
               borderRadius: "10px", padding: "18px 20px", background: i === 0 ? "#f7fcfe" : C.bg,
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "12px", marginBottom: "12px" }}>
@@ -443,23 +443,6 @@ export default function AIProviderComparison() {
           ))}
         </div>
 
-        <div className="mobile-card-padding-sm" style={{ background: C.surface, border: "1.5px solid #1a1a1a", borderRadius: "8px", padding: "16px 20px" }}>
-          <div style={{ fontSize: "12px", fontWeight: 700, color: C.dark, marginBottom: "8px" }}>Configuration detail — Claude on AWS Bedrock</div>
-          <p style={{ fontSize: "13px", color: "#0a4a63", margin: "0 0 8px", lineHeight: 1.7 }}>
-            Two settings must both point to Australia for a deployment to pass an audit:
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: "10px" }}>
-            {[
-              { label: "Inference geo", desc: "Controls where the prompt is read and a response is generated. Must be set to ap-southeast-2 (Sydney)." },
-              { label: "Workspace geo", desc: "Controls where metadata about each call is stored. Must also be set to Australia. If only one is correct, the deployment fails audit." },
-            ].map((item, i) => (
-              <div key={i} style={{ background: C.bg, border: `1px solid ${C.border}`, borderRadius: "6px", padding: "12px 14px" }}>
-                <div style={{ fontSize: "12px", fontWeight: 700, color: C.dark, marginBottom: "4px", fontFamily: "monospace" }}>{item.label}</div>
-                <div style={{ fontSize: "12px", color: C.muted, lineHeight: 1.55 }}>{item.desc}</div>
-              </div>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* Section 4 — Recommendation */}
