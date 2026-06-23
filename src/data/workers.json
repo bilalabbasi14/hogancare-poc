@@ -5,17 +5,11 @@
     "role": "Support Worker",
     "certifications": ["First Aid", "Manual Handling", "Medication Administration", "Dementia Care"],
     "hourlyRate": 32.50,
-    "maxWeeklyHours": 38,
+    "maxWeeklyHours": 40,
     "availability": {
-      "monday": ["07:00-15:00", "15:00-23:00"],
-      "tuesday": ["07:00-15:00"],
-      "wednesday": ["07:00-15:00", "15:00-23:00"],
-      "thursday": ["07:00-15:00"],
-      "friday": ["07:00-15:00", "15:00-23:00"],
-      "saturday": [],
-      "sunday": ["09:00-17:00"]
+      "monday": ["09:00-17:00"], "tuesday": ["09:00-17:00"], "wednesday": [], "thursday": ["09:00-17:00"], "friday": ["09:00-17:00"], "saturday": [], "sunday": []
     },
-    "preferredParticipants": ["P001", "P003"],
+    "preferredParticipants": ["P001", "P003", "Tom01"],
     "rating": 4.8,
     "yearsExperience": 6
   },
@@ -27,15 +21,9 @@
     "hourlyRate": 38.00,
     "maxWeeklyHours": 40,
     "availability": {
-      "monday": ["07:00-15:00"],
-      "tuesday": ["07:00-15:00", "15:00-23:00"],
-      "wednesday": ["15:00-23:00"],
-      "thursday": ["07:00-15:00", "15:00-23:00"],
-      "friday": [],
-      "saturday": ["07:00-15:00", "15:00-23:00"],
-      "sunday": ["07:00-15:00"]
+      "monday": ["09:00-17:00"], "tuesday": ["09:00-17:00"], "wednesday": ["09:00-17:00"], "thursday": ["09:00-17:00"], "friday": ["09:00-17:00"], "saturday": [], "sunday": []
     },
-    "preferredParticipants": ["P002"],
+    "preferredParticipants": ["P002", "Tom01"],
     "rating": 4.9,
     "yearsExperience": 9
   },
@@ -45,15 +33,9 @@
     "role": "Support Worker",
     "certifications": ["First Aid", "Manual Handling", "Dementia Care"],
     "hourlyRate": 30.00,
-    "maxWeeklyHours": 30,
+    "maxWeeklyHours": 40,
     "availability": {
-      "monday": ["09:00-17:00"],
-      "tuesday": ["09:00-17:00"],
-      "wednesday": ["09:00-17:00"],
-      "thursday": [],
-      "friday": ["09:00-17:00"],
-      "saturday": ["09:00-13:00"],
-      "sunday": []
+      "monday": ["09:00-17:00"], "tuesday": ["09:00-17:00"], "wednesday": ["09:00-17:00"], "thursday": ["09:00-17:00"], "friday": ["09:00-17:00"], "saturday": [], "sunday": []
     },
     "preferredParticipants": ["P001", "P004"],
     "rating": 4.5,
@@ -65,15 +47,9 @@
     "role": "Support Worker",
     "certifications": ["First Aid", "Manual Handling", "Medication Administration"],
     "hourlyRate": 31.00,
-    "maxWeeklyHours": 35,
+    "maxWeeklyHours": 40,
     "availability": {
-      "monday": ["15:00-23:00"],
-      "tuesday": ["15:00-23:00"],
-      "wednesday": ["07:00-15:00", "15:00-23:00"],
-      "thursday": ["15:00-23:00"],
-      "friday": ["15:00-23:00"],
-      "saturday": ["07:00-15:00"],
-      "sunday": ["15:00-23:00"]
+      "monday": ["09:00-17:00"], "tuesday": ["09:00-17:00"], "wednesday": ["09:00-17:00"], "thursday": ["09:00-17:00"], "friday": ["09:00-17:00"], "saturday": [], "sunday": []
     },
     "preferredParticipants": ["P005"],
     "rating": 4.3,
@@ -87,13 +63,7 @@
     "hourlyRate": 40.00,
     "maxWeeklyHours": 40,
     "availability": {
-      "monday": ["07:00-15:00", "15:00-23:00"],
-      "tuesday": ["07:00-15:00", "15:00-23:00"],
-      "wednesday": ["07:00-15:00"],
-      "thursday": ["07:00-15:00", "15:00-23:00"],
-      "friday": ["07:00-15:00", "15:00-23:00"],
-      "saturday": ["07:00-15:00"],
-      "sunday": []
+      "monday": ["09:00-17:00"], "tuesday": ["09:00-17:00"], "wednesday": ["09:00-17:00"], "thursday": ["09:00-17:00"], "friday": ["09:00-17:00"], "saturday": [], "sunday": []
     },
     "preferredParticipants": ["P002", "P003"],
     "rating": 5.0,

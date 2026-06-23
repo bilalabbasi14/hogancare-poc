@@ -1,83 +1,69 @@
-[
-  {
-    "workerId": "SW001",
-    "participantId": "P001",
-    "shiftsCompleted": 48,
-    "lastShiftDate": "2025-06-18",
-    "averageRating": 4.9,
-    "incidents": 0,
-    "notes": "Excellent rapport. Participant is visibly calmer with this worker."
+{
+  "Tom01": {
+    "SW001": {
+      "shiftsCompleted": 10,
+      "ratingGiven": 5,
+      "lastShift": "2025-06-15"
+    },
+    "SW002": {
+      "shiftsCompleted": 3,
+      "ratingGiven": 4,
+      "lastShift": "2025-05-10"
+    },
+    "SW003": {
+      "shiftsCompleted": 0,
+      "ratingGiven": null,
+      "lastShift": null
+    }
   },
-  {
-    "workerId": "SW001",
-    "participantId": "P003",
-    "shiftsCompleted": 22,
-    "lastShiftDate": "2025-06-17",
-    "averageRating": 4.7,
-    "incidents": 0,
-    "notes": "Good with distress management. Knows participant's routine well."
+  "P001": {
+    "SW001": {
+      "shiftsCompleted": 48,
+      "ratingGiven": 5,
+      "lastShift": "2025-06-20"
+    },
+    "SW003": {
+      "shiftsCompleted": 12,
+      "ratingGiven": 4,
+      "lastShift": "2025-05-15"
+    }
   },
-  {
-    "workerId": "SW002",
-    "participantId": "P002",
-    "shiftsCompleted": 65,
-    "lastShiftDate": "2025-06-19",
-    "averageRating": 5.0,
-    "incidents": 0,
-    "notes": "Has full knowledge of wound protocol. Participant trusts this worker."
+  "P002": {
+    "SW002": {
+      "shiftsCompleted": 25,
+      "ratingGiven": 5,
+      "lastShift": "2025-06-19"
+    },
+    "SW005": {
+      "shiftsCompleted": 8,
+      "ratingGiven": 4,
+      "lastShift": "2025-06-01"
+    }
   },
-  {
-    "workerId": "SW003",
-    "participantId": "P001",
-    "shiftsCompleted": 15,
-    "lastShiftDate": "2025-06-15",
-    "averageRating": 4.4,
-    "incidents": 1,
-    "notes": "One incident involving missed medication prompt — resolved and noted."
+  "P003": {
+    "SW005": {
+      "shiftsCompleted": 60,
+      "ratingGiven": 5,
+      "lastShift": "2025-06-21"
+    },
+    "SW001": {
+      "shiftsCompleted": 5,
+      "ratingGiven": 3,
+      "lastShift": "2025-04-10"
+    }
   },
-  {
-    "workerId": "SW003",
-    "participantId": "P004",
-    "shiftsCompleted": 30,
-    "lastShiftDate": "2025-06-17",
-    "averageRating": 4.8,
-    "incidents": 0,
-    "notes": "Participant specifically requested this worker. Very calm manner."
+  "P004": {
+    "SW003": {
+      "shiftsCompleted": 30,
+      "ratingGiven": 5,
+      "lastShift": "2025-06-18"
+    }
   },
-  {
-    "workerId": "SW004",
-    "participantId": "P005",
-    "shiftsCompleted": 20,
-    "lastShiftDate": "2025-06-16",
-    "averageRating": 4.3,
-    "incidents": 0,
-    "notes": "Consistent with physio routine. Still building rapport."
-  },
-  {
-    "workerId": "SW005",
-    "participantId": "P002",
-    "shiftsCompleted": 18,
-    "lastShiftDate": "2025-06-14",
-    "averageRating": 5.0,
-    "incidents": 0,
-    "notes": "Backup to SW002. Equally competent with wound care protocol."
-  },
-  {
-    "workerId": "SW005",
-    "participantId": "P003",
-    "shiftsCompleted": 10,
-    "lastShiftDate": "2025-06-10",
-    "averageRating": 4.9,
-    "incidents": 0,
-    "notes": "Excellent with critical care patients. Participant responds well."
-  },
-  {
-    "workerId": "SW002",
-    "participantId": "P003",
-    "shiftsCompleted": 5,
-    "lastShiftDate": "2025-05-30",
-    "averageRating": 4.2,
-    "incidents": 1,
-    "notes": "Participant showed mild distress — SW002 not familiar with dementia protocols beyond certification."
+  "P005": {
+    "SW004": {
+      "shiftsCompleted": 15,
+      "ratingGiven": 4,
+      "lastShift": "2025-06-20"
+    }
   }
-]
+}

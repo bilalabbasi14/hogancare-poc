@@ -1,5 +1,22 @@
 [
   {
+    "id": "Tom01",
+    "name": "Tom Hanks",
+    "age": 70,
+    "condition": ["Mobility limitations"],
+    "careLevel": "Medium",
+    "requiredCertifications": ["First Aid"],
+    "preferredWorkers": ["SW001"],
+    "shiftPattern": {
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "time": "10:00-11:00",
+      "durationHours": 1,
+      "type": "Daily Support"
+    },
+    "fundingBudgetWeekly": 500,
+    "notes": "Demo participant for history continuity."
+  },
+  {
     "id": "P001",
     "name": "Margaret Thompson",
     "age": 82,
@@ -8,9 +25,9 @@
     "requiredCertifications": ["Dementia Care", "Manual Handling"],
     "preferredWorkers": ["SW001", "SW003"],
     "shiftPattern": {
-      "days": ["monday", "wednesday", "friday"],
-      "time": "08:00-12:00",
-      "durationHours": 4,
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "time": "09:00-10:00",
+      "durationHours": 1,
       "type": "Morning Personal Care"
     },
     "fundingBudgetWeekly": 600,
@@ -26,8 +43,8 @@
     "preferredWorkers": ["SW002", "SW005"],
     "shiftPattern": {
       "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
-      "time": "09:00-11:00",
-      "durationHours": 2,
+      "time": "11:00-12:00",
+      "durationHours": 1,
       "type": "Daily Medical Support"
     },
     "fundingBudgetWeekly": 700,
@@ -42,9 +59,9 @@
     "requiredCertifications": ["Dementia Care", "Medication Administration", "Manual Handling"],
     "preferredWorkers": ["SW001", "SW005"],
     "shiftPattern": {
-      "days": ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday"],
-      "time": "07:00-10:00",
-      "durationHours": 3,
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "time": "12:00-13:00",
+      "durationHours": 1,
       "type": "Morning Care & Medication"
     },
     "fundingBudgetWeekly": 950,
@@ -59,9 +76,9 @@
     "requiredCertifications": ["Medication Administration", "First Aid"],
     "preferredWorkers": ["SW003"],
     "shiftPattern": {
-      "days": ["tuesday", "thursday", "saturday"],
-      "time": "10:00-12:00",
-      "durationHours": 2,
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "time": "13:00-14:00",
+      "durationHours": 1,
       "type": "Social Support & Medication"
     },
     "fundingBudgetWeekly": 300,
@@ -76,12 +93,114 @@
     "requiredCertifications": ["Manual Handling", "Medication Administration"],
     "preferredWorkers": ["SW004"],
     "shiftPattern": {
-      "days": ["monday", "wednesday", "friday", "sunday"],
-      "time": "16:00-19:00",
-      "durationHours": 3,
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "time": "14:00-15:00",
+      "durationHours": 1,
       "type": "Afternoon Physio Support"
     },
     "fundingBudgetWeekly": 480,
     "notes": "Physiotherapy exercises must be completed. Monitor blood pressure before exercise."
+  },
+  {
+    "id": "P006",
+    "name": "John Smith",
+    "age": 68,
+    "condition": ["Diabetes", "Mobility limitations"],
+    "careLevel": "Low",
+    "requiredCertifications": ["First Aid"],
+    "preferredWorkers": [],
+    "shiftPattern": {
+      "days": ["monday", "wednesday", "friday"],
+      "time": "09:00-10:00",
+      "durationHours": 1,
+      "type": "Daily Support"
+    },
+    "fundingBudgetWeekly": 400,
+    "notes": "Generated patient"
+  },
+  {
+    "id": "P007",
+    "name": "Mary Jane",
+    "age": 85,
+    "condition": ["Dementia (mild)"],
+    "careLevel": "Medium",
+    "requiredCertifications": ["First Aid", "Dementia Care"],
+    "preferredWorkers": [],
+    "shiftPattern": {
+      "days": ["tuesday", "thursday"],
+      "time": "15:00-16:00",
+      "durationHours": 1,
+      "type": "Afternoon care"
+    },
+    "fundingBudgetWeekly": 350,
+    "notes": "Generated patient"
+  },
+  {
+    "id": "P008",
+    "name": "William Blake",
+    "age": 77,
+    "condition": ["Post-stroke rehabilitation"],
+    "careLevel": "High",
+    "requiredCertifications": ["Manual Handling"],
+    "preferredWorkers": [],
+    "shiftPattern": {
+      "days": ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      "time": "16:00-17:00",
+      "durationHours": 1,
+      "type": "Physio support"
+    },
+    "fundingBudgetWeekly": 600,
+    "notes": "Generated patient"
+  },
+  {
+    "id": "P009",
+    "name": "Bruce Wayne",
+    "age": 45,
+    "condition": ["Physical rehabilitation"],
+    "careLevel": "Medium",
+    "requiredCertifications": ["Manual Handling"],
+    "preferredWorkers": [],
+    "shiftPattern": {
+      "days": ["monday", "wednesday", "friday"],
+      "time": "14:00-15:00",
+      "durationHours": 1,
+      "type": "Physio Support"
+    },
+    "fundingBudgetWeekly": 500,
+    "notes": "Alternating days demo"
+  },
+  {
+    "id": "P010",
+    "name": "Clark Kent",
+    "age": 35,
+    "condition": ["Social Support"],
+    "careLevel": "Low",
+    "requiredCertifications": ["First Aid"],
+    "preferredWorkers": [],
+    "shiftPattern": {
+      "days": ["tuesday", "thursday"],
+      "time": "14:00-15:00",
+      "durationHours": 1,
+      "type": "Social check-in"
+    },
+    "fundingBudgetWeekly": 200,
+    "notes": "Alternating days demo"
+  },
+  {
+    "id": "P011",
+    "name": "Diana Prince",
+    "age": 80,
+    "condition": ["Mobility limitations"],
+    "careLevel": "High",
+    "requiredCertifications": ["Manual Handling"],
+    "preferredWorkers": [],
+    "shiftPattern": {
+      "days": ["monday", "tuesday", "thursday"],
+      "time": "11:00-12:00",
+      "durationHours": 1,
+      "type": "Mobility Support"
+    },
+    "fundingBudgetWeekly": 400,
+    "notes": "Alternating days demo"
   }
 ]

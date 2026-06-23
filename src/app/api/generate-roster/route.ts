@@ -7,6 +7,8 @@ export async function POST(req: NextRequest) {
   const body = await req.json();
   const { participants, workers, history, weights, weekStart } = body;
 
+  const totalExpectedShifts = participants.reduce((acc: number, p: any) => acc + (p.shiftPattern?.days?.length || 0), 0);
+
   const systemPrompt = `You are an expert aged care rostering AI for Hogan Care, an Australian NDIS service provider.
 
 Your job is to assign Support Workers (SW) to Participant shifts for the upcoming week.
@@ -17,17 +19,16 @@ RULES YOU MUST FOLLOW:
 2. A worker must hold ALL certifications required by the participant.
 3. A worker cannot exceed their maxWeeklyHours across all assigned shifts this week.
 4. Funding budget per participant per week must not be exceeded (hourlyRate × shiftHours × shifts).
-5. Workers with prior history with a participant MUST be strongly preferred — continuity of care is critical in aged care.
-6. If a participant has a preferred worker list, those workers get priority.
-7. If NO valid worker can be assigned to a shift, flag it as UNASSIGNED and explain why.
-8. ALWAYS use worker names (e.g., "Sarah", "David") instead of IDs (like "SW004") in your assignmentReason and alternativeWorker fields.
-9. Provide a detailed, 2-3 sentence explanation for the assignmentReason, outlining exactly why they were the best fit (history, skills, cost, etc).
+5. If a participant has a preferred worker list, those workers get priority.
+6. If NO valid worker can be assigned to a shift, flag it as UNASSIGNED and explain why.
+7. ALWAYS use worker names instead of IDs in your assignmentReason.
+8. CRITICAL TOKEN SAVING: Keep 'assignmentReason' to 2 or 3 words MAXIMUM (e.g., "High continuity", "Skill match"). Do NOT write full sentences.
+9. CRITICAL: You MUST generate and include every single shift for every participant across all days specified in their shiftPattern. DO NOT SKIP any shifts.
+10. CRITICAL: You MUST generate every single shift separately. If a participant has 5 days in their shiftPattern, you MUST generate 5 separate JSON objects. DO NOT group days (e.g., "monday, tuesday"). Each object must have exactly one day.
 
-WEIGHTING PRIORITIES (0–100, higher = more important):
+WEIGHTING PRIORITIES (Tie-breakers after hard rules are met):
 
 - History/continuity: ${weights?.history ?? 80}
-- Skill match quality: ${weights?.skillMatch ?? 70}
-- Availability fit: ${weights?.availability ?? 100}
 - Cost efficiency (prefer lower hourly rate when equal): ${weights?.costEfficiency ?? 40}
 - Worker rating: ${weights?.workerRating ?? 60}
 
@@ -46,12 +47,8 @@ RESPOND ONLY IN VALID JSON. No explanation text outside the JSON. Format:
       "durationHours": 4,
       "shiftType": "Morning Personal Care",
       "assignedWorkerId": "SW001",
-      "assignedWorkerName": "...",
-      "assignmentReason": "Sarah has completed 48 prior shifts with Margaret, giving her the highest continuity score among available staff. She holds both the Dementia Care and Manual Handling certifications required for this shift, and her availability perfectly matches the 07:00-15:00 window. Additionally, assigning her keeps Margaret within her weekly funding budget.",
-      "confidenceScore": 95,
-      "alternativeWorker": "Linda",
-      "weeklyWorkerCost": 130.00,
-      "flags": []
+      "assignedWorkerName": "Sarah Mitchell",
+      "assignmentReason": "High continuity score"
     }
   ],
   "conflicts": [
@@ -84,13 +81,17 @@ HISTORICAL WORKER-PARTICIPANT DATA:
 ${JSON.stringify(history, null, 2)}
 
 Assign shifts for every participant for every day in their shift pattern within this week.
-For each shift, calculate the exact date from the weekStart and the day name.`;
+For each shift, calculate the exact date from the weekStart and the day name.
+
+CRITICAL MANDATORY INSTRUCTION:
+You are provided with ${participants.length} participants who require exactly ${totalExpectedShifts} shifts in total across the week.
+You MUST output exactly ${totalExpectedShifts} shift objects in the "roster" array. DO NOT STOP GENERATING until you have produced all ${totalExpectedShifts} shifts. If your JSON array has fewer than ${totalExpectedShifts} items, you have FAILED.`;
 
   try {
     const response = await openai.chat.completions.create({
-      model: 'gpt-4o',
+      model: 'gpt-4o-2024-08-06',
       response_format: { type: 'json_object' },
-      max_tokens: 4000,
+      max_tokens: 16000,
       messages: [
         { role: 'system', content: systemPrompt },
         { role: 'user', content: userPrompt },
