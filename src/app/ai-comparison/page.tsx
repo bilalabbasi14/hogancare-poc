@@ -488,7 +488,7 @@ export default function AIProviderComparison() {
       </section>
 
       <div style={{ borderTop: `1px solid #e8e8e8`, paddingTop: "20px", fontSize: "11px", color: C.subtle }}>
-        Pricing data current as of June 2026. API rates are subject to change — verify with each provider before procurement.
+        Pricing data current as of June 2026.
       </div>
     </div>
   );
